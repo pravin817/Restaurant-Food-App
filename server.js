@@ -3,9 +3,13 @@ const colors = require("colors");
 const cors = require("cors");
 const morgan = require("morgan");
 const dotenv = require("dotenv");
+const connectDB = require("./config/db");
 
 // Configure the dotenv
 dotenv.config();
+
+// connect with Database
+connectDB();
 
 // Rest Object
 const app = express();
@@ -16,7 +20,6 @@ app.use(express.json());
 app.use(morgan("dev"));
 
 // routes
-
 app.use("/api/v1/test", require("./routes/testRoute"));
 app.get("/", (req, res) => {
   res.status(200).send(`<h1>Welcome to Food App Server</h1>`);
