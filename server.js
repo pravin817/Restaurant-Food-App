@@ -15,7 +15,9 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
-// route
+// routes
+
+app.use("/api/v1/test", require("./routes/testRoute"));
 app.get("/", (req, res) => {
   res.status(200).send(`<h1>Welcome to Food App Server</h1>`);
 });
