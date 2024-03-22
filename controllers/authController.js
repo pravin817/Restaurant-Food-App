@@ -48,6 +48,60 @@ const registerController = async (req, res) => {
   }
 };
 
+// User Login || POST
+const loginController = async (req, res) => {
+  try {
+    // get email and password from the body
+    const { email, password } = req.body;
+
+    // validate the input fields
+    if (!email || !password) {
+      return res.status(500).send({
+        message: "Please provide email and password",
+        status: false,
+      });
+    }
+
+    // check if the email is registred
+    const isEmailRegistered = await User.find({ email });
+    console.log("User details : ", isEmailRegistered);
+
+    if (isEmailRegistered.length === 0) {
+      return res.status(404).send({
+        message: "User not registered",
+        status: false,
+      });
+    }
+
+    // Now check the email and password in the database
+    const user = await User.findOne({ email, password });
+    // console.log(user);
+
+    // if user not exist
+    if (!user) {
+      return res.status(500).send({
+        message: "Invalid email or password",
+        status: false,
+      });
+    }
+
+    // If all goes well
+    res.status(200).send({
+      message: "User login successfully",
+      status: true,
+      user: user,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while login the user",
+      status: false,
+      error,
+    });
+  }
+};
+
 module.exports = {
   registerController,
+  loginController,
 };
