@@ -11,7 +11,7 @@ const getUserController = async (req, res) => {
     const user = await User.findById({ _id: id });
 
     if (!user) {
-      res.status(404).send({
+      return res.status(404).send({
         message: "User not found",
         success: false,
       });
@@ -178,9 +178,46 @@ const resetPasswordController = async (req, res) => {
     });
   }
 };
+
+// Delete Profile Account
+const deleteProfileController = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const id2 = req.body.id;
+
+    if (id !== id2) {
+      return res.status(400).send({
+        message: "You are not authorized to delete the account",
+        success: false,
+      });
+    }
+
+    const user = await User.findByIdAndDelete({ _id: id });
+
+    if (!user) {
+      return res.status(404).send({
+        message: "User not found",
+        success: false,
+      });
+    }
+
+    res.status(200).send({
+      message: "User account deleted successfully.",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error occurs while deleting the user account",
+      success: false,
+      error,
+    });
+  }
+};
 module.exports = {
   getUserController,
   updateUserController,
   updatePasswordController,
   resetPasswordController,
+  deleteProfileController,
 };
