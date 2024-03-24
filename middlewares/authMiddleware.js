@@ -15,7 +15,8 @@ const authMiddleware = async (req, res, next) => {
           err,
         });
       } else {
-        req.body.id = decoded._id;
+        req.body.id = decoded.id;
+        // console.log("decoded ", decoded);
         next();
       }
     });

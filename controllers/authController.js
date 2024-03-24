@@ -13,7 +13,7 @@ const registerController = async (req, res) => {
     if (!username || !email || !password || !phone) {
       return res.status(500).send({
         message: "Please provide all fields",
-        status: false,
+        success: false,
       });
     }
 
@@ -23,7 +23,7 @@ const registerController = async (req, res) => {
     if (isExistingUser) {
       return res.status(500).send({
         message: "User already exists, please login",
-        status: false,
+        success: false,
       });
     }
 
@@ -42,14 +42,14 @@ const registerController = async (req, res) => {
     // send the response
     res.status(201).send({
       message: "User registered successfully",
-      status: true,
+      success: true,
       user: newUser,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       message: "Error while registering the user",
-      status: false,
+      success: false,
       error,
     });
   }
@@ -65,7 +65,7 @@ const loginController = async (req, res) => {
     if (!email || !password) {
       return res.status(500).send({
         message: "Please provide email and password",
-        status: false,
+        success: false,
       });
     }
 
@@ -76,7 +76,7 @@ const loginController = async (req, res) => {
     if (isEmailRegistered.length === 0) {
       return res.status(404).send({
         message: "User not registered",
-        status: false,
+        success: false,
       });
     }
 
@@ -88,7 +88,7 @@ const loginController = async (req, res) => {
     if (!isMatch) {
       return res.status(500).send({
         message: "Invalid email or password",
-        status: false,
+        success: false,
       });
     }
 
@@ -102,7 +102,7 @@ const loginController = async (req, res) => {
     user.password = undefined;
     res.status(200).send({
       message: "User login successfully",
-      status: true,
+      success: true,
       user: user,
       token,
     });
@@ -110,7 +110,7 @@ const loginController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       message: "Error while login the user",
-      status: false,
+      success: false,
       error,
     });
   }
