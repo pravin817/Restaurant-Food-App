@@ -1,5 +1,5 @@
 const data = {
-  title: "pizza hut",
+  name: "pizza hut",
   imageUrl:
     "https://www.zilliondesigns.com/blog/wp-content/uploads/Dominos-Pizza-logo-2.jpg",
   foods: [
@@ -10,8 +10,8 @@ const data = {
       price: 5,
     },
   ],
-  time: "9am to 9pm",
-  pickup: true,
+  timing: "9am to 9pm",
+  pickUp: true,
   delivery: true,
   isOpen: true,
   logoUrl:
@@ -19,40 +19,43 @@ const data = {
   rating: 5,
   ratingCount: "5",
   code: "1234",
-  coords: {
+  coordinates: {
     id: "123456",
     latitude: "1234",
     latitudeDelta: "1234",
     longitude: "1234",
     longitudeDelta: "1234",
+    title: "Pizza Hut",
     address: "mumbai india",
   },
-  title: "burger king",
+
+  name: "Burger King",
   imageUrl:
-    "https://w1.pngwing.com/pngs/264/707/png-transparent-burger-logo-burger-king-hamburger-milkshake-fast-food-restaurant-yellow.png",
+    "https://www.zilliondesigns.com/blog/wp-content/uploads/Dominos-Pizza-logo-2.jpg",
   foods: [
     {
-      dishName: "chicken burger",
-      price: 2,
+      dishName: "chicken pizza",
       dishPic:
-        "https://w1.pngwing.com/pngs/264/707/png-transparent-burger-logo-burger-king-hamburger-milkshake-fast-food-restaurant-yellow.png",
+        "https://www.zilliondesigns.com/blog/wp-content/uploads/Dominos-Pizza-logo-2.jpg",
+      price: 5,
     },
   ],
-  time: "9am to 9pm",
-  pickup: true,
+  timing: "9am to 9pm",
+  pickUp: true,
   delivery: true,
   isOpen: true,
   logoUrl:
-    "https://w1.pngwing.com/pngs/264/707/png-transparent-burger-logo-burger-king-hamburger-milkshake-fast-food-restaurant-yellow.png",
+    "https://www.zilliondesigns.com/blog/wp-content/uploads/Dominos-Pizza-logo-2.jpg",
   rating: 5,
   ratingCount: "5",
   code: "1234",
-  coords: {
+  coordinates: {
     id: "123456",
     latitude: "1234",
     latitudeDelta: "1234",
     longitude: "1234",
     longitudeDelta: "1234",
-    address: "mumbai india",
+    title: "Pizza Hut",
+    address: "Pune,India",
   },
 };
