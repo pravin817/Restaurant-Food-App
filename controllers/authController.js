@@ -6,11 +6,11 @@ const saltRound = 10;
 const registerController = async (req, res) => {
   try {
     // extract the data from the request
-    const { username, email, password, phone } = req.body;
+    const { username, email, password, phone, answer } = req.body;
     console.log(req.body);
 
     // validate the input fields
-    if (!username || !email || !password || !phone) {
+    if (!username || !email || !password || !phone || !answer) {
       return res.status(500).send({
         message: "Please provide all fields",
         success: false,
@@ -37,8 +37,11 @@ const registerController = async (req, res) => {
       email,
       password: hashedPassword,
       phone,
+      answer,
     });
 
+    // remove the password from the response
+    newUser.password = undefined;
     // send the response
     res.status(201).send({
       message: "User registered successfully",
