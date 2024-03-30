@@ -1,5 +1,6 @@
 const Restaurant = require("../models/restaurantModel");
 
+// Create / Add new Restaurant || POST
 const createRestaurantController = async (req, res) => {
   try {
     const {
@@ -58,7 +59,7 @@ const createRestaurantController = async (req, res) => {
     await newRestaurant.save();
 
     res.status(201).send({
-      message: "Restaurant created successfully.",
+      message: "New restaurant created successfully.",
       success: true,
     });
   } catch (error) {
@@ -71,6 +72,77 @@ const createRestaurantController = async (req, res) => {
   }
 };
 
+// Get Restaurant || GET
+const getAllRestaurantsController = async (req, res) => {
+  try {
+    const restaurants = await Restaurant.find({});
+
+    console.log(restaurants);
+
+    if (restaurants.length === 0) {
+      return res.status(404).send({
+        message: "No restaurant found",
+        success: false,
+      });
+    }
+
+    // Return the all restaurants
+    res.status(200).send({
+      message: "All restaurants",
+      success: true,
+      restaurants,
+      totalCount: restaurants.length,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while getting the all restaurants",
+      success: false,
+      error,
+    });
+  }
+};
+
+// Get Single Restaurant || GET
+const getSingleRestaurantController = async (req, res) => {
+  try {
+    // get the single Restaurant id
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).send({
+        message: "Please provide the restaurant id",
+        success: false,
+      });
+    }
+
+    const restaurant = await Restaurant.findById(id);
+
+    if (!restaurant) {
+      return res.status(404).send({
+        message: "No restaurant found",
+        success: false,
+      });
+    }
+
+    // Return the single restaurant
+    res.status(200).send({
+      message: "Restaurant found successfully",
+      success: true,
+      restaurant,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while getting the single restaurant",
+      success: false,
+      error,
+    });
+  }
+};
+
 module.exports = {
   createRestaurantController,
+  getAllRestaurantsController,
+  getSingleRestaurantController,
 };
