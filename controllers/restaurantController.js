@@ -77,7 +77,7 @@ const getAllRestaurantsController = async (req, res) => {
   try {
     const restaurants = await Restaurant.find({});
 
-    console.log(restaurants);
+    // console.log(restaurants);
 
     if (restaurants.length === 0) {
       return res.status(404).send({
@@ -141,8 +141,44 @@ const getSingleRestaurantController = async (req, res) => {
   }
 };
 
+// Delete Single Restaurant || DELETE
+const deleteRestaurantController = async (req, res) => {
+  try {
+    const restaurantId = req.params.id;
+
+    if (!restaurantId) {
+      return res.status(400).send({
+        message: "Please provide the restaurant id",
+        success: false,
+      });
+    }
+
+    const restaurant = await Restaurant.findByIdAndDelete(restaurantId);
+
+    if (!restaurant) {
+      return res.status(404).send({
+        message: "No restaurant found",
+        success: false,
+      });
+    }
+
+    res.status(200).send({
+      message: "Restaurant deleted successfully",
+      success: true,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while deleting the restaurant",
+      success: false,
+      error,
+    });
+  }
+};
+
 module.exports = {
   createRestaurantController,
   getAllRestaurantsController,
   getSingleRestaurantController,
+  deleteRestaurantController,
 };

@@ -4,6 +4,7 @@ const {
   createRestaurantController,
   getAllRestaurantsController,
   getSingleRestaurantController,
+  deleteRestaurantController,
 } = require("../controllers/restaurantController");
 
 const router = express.Router();
@@ -16,5 +17,9 @@ router.post("/create", authMiddleware, createRestaurantController);
 router.get("/getAll", getAllRestaurantsController);
 
 // Get the single Restaurant || GET
-router.get("/get/:id",getSingleRestaurantController);
+router.get("/get/:id", getSingleRestaurantController);
+
+// Delete the single Restaurant || DELETE
+router.delete("/delete/:id", authMiddleware, deleteRestaurantController);
+
 module.exports = router;
