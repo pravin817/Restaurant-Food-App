@@ -96,7 +96,7 @@ const getSingleFoodController = async (req, res) => {
       });
     }
 
-    const food = await Food.findById({ _id: foodId });
+    const food = await Food.findById(foodId);
 
     if (!food) {
       return res.status(404).send({
@@ -155,9 +155,115 @@ const getFoodsByRestaurantController = async (req, res) => {
   }
 };
 
+// Update the food || PUT
+const updateFoodController = async (req, res) => {
+  try {
+    const foodId = req.params.id;
+
+    if (!foodId) {
+      return res.status(404).send({
+        message: "Please provide the food ID",
+        success: false,
+      });
+    }
+
+    const food = await Food.findById(foodId);
+
+    if (!food) {
+      return res.status(404).send({
+        message: "No food found",
+        success: false,
+      });
+    }
+
+    const {
+      name,
+      description,
+      price,
+      imageUrl,
+      foodTags,
+      category,
+      code,
+      isAvailable,
+      restaurant,
+      rating,
+      ratingCount,
+    } = req.body;
+
+    const updatedFood = await Food.findByIdAndUpdate(
+      { _id: foodId },
+      {
+        name,
+        description,
+        price,
+        imageUrl,
+        foodTags,
+        category,
+        code,
+        isAvailable,
+        restaurant,
+        rating,
+        ratingCount,
+      },
+      { new: true }
+    );
+
+    res.status(200).send({
+      message: "Food updated successfully",
+      success: true,
+      food: updatedFood,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while updating the food",
+      success: false,
+      error,
+    });
+  }
+};
+
+// Delete the food || DELETE
+const deleteFoodController = async (req, res) => {
+  try {
+    const foodId = req.params.id;
+
+    if (!foodId) {
+      return res.status(404).send({
+        message: "Please provide the food ID",
+        success: false,
+      });
+    }
+
+    const deletedFood = await Food.findByIdAndDelete(foodId);
+
+    if (!deletedFood) {
+      return res.status(404).send({
+        message: "No food found",
+        success: false,
+      });
+    }
+
+    res.status(200).send({
+      message: "Food deleted successfully",
+      success: true,
+      food: deletedFood,
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      message: "Error while deleting the food ",
+      success: false,
+      error,
+    });
+  }
+};
+
 module.exports = {
   createFoodController,
   getAllFoodController,
   getSingleFoodController,
   getFoodsByRestaurantController,
+  updateFoodController,
+  deleteFoodController,
 };
